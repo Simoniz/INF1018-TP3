@@ -38,9 +38,9 @@
  *   // overrides f() to run it in a new thread
  *       new Thread(new Runnable() {
  *           public void run() {
- *          D.super.f();
- *      }
- *   }).start();
+ *	        D.super.f();
+ *	    }
+ *	 }).start();
  *    }
  * }
  *
@@ -117,16 +117,16 @@ options {
 PARSER_BEGIN(JavaParser)
 
 import java.util.*;
-import java.io.*;
+import java.io.File;
 
 public class JavaParser
 {
 // modified main Andrea Gini 24/02/2002
 // modified main. DW, 7/99
 
-	//VARIABLES DE CLASSES
-    public ObjectManager om = new ObjectManager();	
-    public MyJavaFilesManager mjfm = new MyJavaFilesManager();
+    //UN MANAGER D'OBJECT.
+    ObjectManager om = new ObjectManager();
+    MyJavaFilesManager mjfm = new MyJavaFilesManager();
 
     public static void main (String [] args) {
         JavaParser parser;
@@ -141,34 +141,19 @@ public class JavaParser
             parser = new JavaParser(System.in);
         } else if (args.length == 1)
         {
-			//try
-	        //{
-	            startTime = System.currentTimeMillis(); 
-	
-		        //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
-		        parser = new JavaParser(new File(args[0].toString()));
-		        //JavaFile jf = new JavaFile(filename);           
-		        //parser.om.push(jf); 
-		
-		        //Parse....		                        
-	            //parser.CompilationUnit();
-		        
-		        //Affiche le résultat
-	            parser.showResults();
-
-				//FIN.
-	            stopTime = System.currentTimeMillis();
-	            parseTime = stopTime - startTime;
-	            System.out.println("Java Parser Version 1.1 (for Java1.4 code): ");
-	            System.out.println("   Java program parsed " + filename + " successfully in " + (initTime + parseTime) + " ms.");
-	            System.out.println("      parser initialization time was " + initTime + " ms.");
-	            System.out.println("      parser parse time was " + parseTime + " ms.");
-	        //} catch (ParseException e)
-	        //{
-	        //    System.out.println(e.getMessage());
-	        //    System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Encountered errors during parse.");
-	        //}	
-
+            filename = args[0];
+            System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Reading from file " + filename + " . . .");
+            try
+            {
+                startTime = System.currentTimeMillis();
+                parser = new JavaParser(new java.io.FileInputStream(filename));
+                stopTime = System.currentTimeMillis();
+                initTime = stopTime - startTime;
+            } catch (java.io.FileNotFoundException e)
+            {
+                System.out.println("Java Parser Version 1.1 (for Java1.4 code):  File " + filename + " not found.");
+                return;
+            }
         } else
         {
             System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Usage is one of:");
@@ -177,16 +162,41 @@ public class JavaParser
             System.out.println("         java JavaParser inputfile");
             return;
         }
-        
+        try
+        {
+            startTime = System.currentTimeMillis();	
+
+
+  	    //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
+   	    JavaFile jf = new JavaFile(filename);	    	
+	    parser.om.push(jf);	
+
+	    //Parse....		    		
+            parser.CompilationUnit();
+		
+
+	    //Affiche le résultat
+            parser.showResults();
+
+            stopTime = System.currentTimeMillis();
+            parseTime = stopTime - startTime;
+            System.out.println("Java Parser Version 1.1 (for Java1.4 code): ");
+            System.out.println("   Java program parsed " + filename + " successfully in " + (initTime + parseTime) + " ms.");
+            System.out.println("      parser initialization time was " + initTime + " ms.");
+            System.out.println("      parser parse time was " + parseTime + " ms.");
+        } catch (ParseException e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Encountered errors during parse.");
+        }
     }
 
-    public JavaFile get_javaFile(){
-        return (JavaFile)this.om.get(0);
-    }
+	public JavaFile get_javaFile(){
+		return (JavaFile)this.om.get(0);
+	}
 
-	//CONSTRUCTEUR DU JAVAPARSER
-    public JavaParser(File file){
-    java.io.FileInputStream stream = null;
+	public JavaParser(File file){
+	java.io.FileInputStream stream = null;
         try {
             stream = new java.io.FileInputStream(file);
         } catch (java.io.FileNotFoundException e) {
@@ -207,71 +217,71 @@ public class JavaParser
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
+	}
 
-        public void showResults(){
-    
-        //Affiche le package du fichier
-        JavaFile javaFile;
-        javaFile = (JavaFile) this.om.get(0);
-        System.out.println("Informations capturees du fichier :" + javaFile.get_File().getName());
-        System.out.println("Package: " + javaFile.get_Package() + "\n");    
+    	public void showResults(){
+	
+		//Affiche le package du fichier
+		JavaFile javaFile;
+		javaFile = (JavaFile) this.om.get(0);
+		System.out.println("Informations capturees du fichier :" + javaFile.get_File().getName());
+		System.out.println("Package: " + javaFile.get_Package() + "\n");	
 
-        //Affiche les importations
-        System.out.println("Imports :");
-        ListIterator i = javaFile.get_importList().listIterator();
-        while(i.hasNext()){
-            System.out.println("  " + ((Import)i.next()).get_path());       
-        }       
+		//Affiche les importations
+		System.out.println("Imports :");
+		ListIterator i = javaFile.get_importList().listIterator();
+	   	while(i.hasNext()){
+			System.out.println("  " + ((Import)i.next()).get_path());		
+		}		
 
-        //Stats du JavaFile
-        System.out.println("\nStatistiques du fichier "+ javaFile.get_File().getName()); 
-        System.out.println("   Nombre de classe(s): " + javaFile.get_classList().size());
-        System.out.println("   Nombre de classe(s) Publique(s) : " + javaFile.get_classList().get_classRange(Range.PUBLIC));    
-        System.out.println("   Nombre de classe(s) Privee(s) : " + javaFile.get_classList().get_classRange(Range.PRIVATE));
-        System.out.println("   Nombre de classe(s) Protected : " + javaFile.get_classList().get_classRange(Range.PROTECTED) + "\n");
+		//Stats du JavaFile
+		System.out.println("\nStatistiques du fichier "+ javaFile.get_File().getName()); 
+		System.out.println("   Nombre de classe(s): " + javaFile.get_classList().size());
+		System.out.println("   Nombre de classe(s) Publique(s) : " + javaFile.get_classList().get_classRange(Range.PUBLIC));	
+		System.out.println("   Nombre de classe(s) Privee(s) : " + javaFile.get_classList().get_classRange(Range.PRIVATE));
+		System.out.println("   Nombre de classe(s) Protected : " + javaFile.get_classList().get_classRange(Range.PROTECTED) + "\n");
 
-        //Affiche les informations de chaque classes
-        System.out.println("Classes du fichier:");
-        i = javaFile.get_classList().listIterator();
-        while(i.hasNext()){
-            DescriptionClass c = (DescriptionClass)i.next();
-            System.out.println(" +" + c.get_Name() + "\n"); 
+		//Affiche les informations de chaque classes
+		System.out.println("Classes du fichier:");
+		i = javaFile.get_classList().listIterator();
+	   	while(i.hasNext()){
+			DescriptionClass c = (DescriptionClass)i.next();
+			System.out.println(" +" + c.get_Name() + "\n");	
 
-            //Affiche les simple stats
-            System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());
-            System.out.println("    Nombre de methode(s): " + c.methodlist.size());
-            System.out.println("    Nombre de methode(s) Publique(s) : " +                    c.methodlist.get_methodsRange(Range.PUBLIC)); 
-            System.out.println("    Nombre de methode(s) Privee(s) : " +                      c.methodlist.get_methodsRange(Range.PRIVATE) );
-            System.out.println("    Nombre de methode(s) Protected : " +                    c.methodlist.get_methodsRange(Range.PROTECTED) + "\n");
+			//Affiche les simple stats
+			System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());
+			System.out.println("    Nombre de methode(s): " + c.methodlist.size());
+			System.out.println("    Nombre de methode(s) Publique(s) : " + 					  c.methodlist.get_methodsRange(Range.PUBLIC));	
+			System.out.println("    Nombre de methode(s) Privee(s) : " + 					  c.methodlist.get_methodsRange(Range.PRIVATE) );
+			System.out.println("    Nombre de methode(s) Protected : " + 					c.methodlist.get_methodsRange(Range.PROTECTED) + "\n");
 
-            //Affiche les attributs
-            System.out.println("    Liste d'attributs de la classe:");
-            ListIterator x = c.attributelist.listIterator();
-            while(x.hasNext())
-                System.out.println("      " + ((Attribute)x.next()).toString());
-            System.out.println(""); 
+			//Affiche les attributs
+			System.out.println("    Liste d'attributs de la classe:");
+			ListIterator x = c.attributelist.listIterator();
+			while(x.hasNext())
+			    System.out.println("      " + ((Attribute)x.next()).toString());
+			System.out.println("");	
 
 
-            //Affiche les méthodes
-             x= c.methodlist.listIterator();
-            while(x.hasNext()){
-                Method m = (Method)x.next();
-                System.out.println("   +" + m.toString());
-                System.out.println("   Sa portee: " + m.range.toString() +"\n");    
+			//Affiche les méthodes
+			 x= c.methodlist.listIterator();
+	   		while(x.hasNext()){
+				Method m = (Method)x.next();
+				System.out.println("   +" + m.toString());
+				System.out.println("   Sa portee: " + m.range.toString() +"\n");	
 
-                //Affiche les simple stats
-                System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());                           
-                System.out.println("       Liste d'attributs :");
-                ListIterator y = m.attributelist.listIterator();
-                while(y.hasNext())
-                    System.out.println("          " +((Attribute)y.next()).toString());
-                System.out.println("");
-            }
+				//Affiche les simple stats
+				System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());							
+				System.out.println("       Liste d'attributs :");
+				ListIterator y = m.attributelist.listIterator();
+				while(y.hasNext())
+					System.out.println("          " +((Attribute)y.next()).toString());
+				System.out.println("");
+			}
 
-        }
-        
-    }   
+		}
+		
+	}	
 
 }
 
@@ -542,12 +552,6 @@ TOKEN :
 /*****************************************
  * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
  *****************************************/
-void Start() :
-{}
-{
-    CompilationUnit()
-}
- //============================================================
 
 /*
  * Program structuring syntax follows.
@@ -575,7 +579,7 @@ String PackageDeclaration() :
 
  strName = Name() ";"
 
- {return strName;}      
+ {return strName;}    	
 }
 
 String ImportDeclaration() :
@@ -786,7 +790,7 @@ void FieldDeclaration() :
 
  //Ajoute à notre manager l'attribut.
  om.addToTopObject(a);
- om.pop();          //Enlève de la pile...
+ om.pop(); 			//Enlève de la pile...
 }
 
 
@@ -802,7 +806,7 @@ void FieldDeclaration() :
 
   //Ajoute à notre manager l'attribut.
   om.addToTopObject(a);
-  om.pop();             //Enlève de la pile...
+  om.pop(); 			//Enlève de la pile...
 }
 
   )* ";"
@@ -843,7 +847,7 @@ void ArrayInitializer() :
   "{" [ VariableInitializer() ( LOOKAHEAD(2) "," VariableInitializer() )* ] [ "," ] "}"
 }
 
-void MethodDeclaration():
+void MethodDeclaration() :
 {
  Method m;
  MyMethod mm = new MyMethod();
@@ -862,7 +866,7 @@ void MethodDeclaration():
   ( 
    //On est dans la méthode....
    {
-    mm.returnType = strResult;
+   	mm.returnType = strResult;
     mjfm.actClass.methods.add(mm);
     m.set_returnType(strResult);
     m.range = range;
@@ -894,9 +898,9 @@ void FormalParameters(MyMethod mm) :
 
 void FormalParameter(MyMethod mm) :
 {
-    MyAttribut a = new MyAttribut();
-    mm.parameters.add(a);
-    String str;
+	MyAttribut a = new MyAttribut();
+	mm.parameters.add(a);
+	String str;
 }
 {
   [ "final" {a.range.isFinal = true;} ] 
@@ -906,10 +910,10 @@ void FormalParameter(MyMethod mm) :
 
 void ConstructorDeclaration() :
 {
-    MyMethod mm = new MyMethod();
-    mm.nom = mjfm.actClass.nom;
-    mjfm.actClass.methods.add(mm);
-    
+	MyMethod mm = new MyMethod();
+	mm.nom = mjfm.actClass.nom;
+	mjfm.actClass.methods.add(mm);
+	
 }
 {
   [ "public" {mm.range.range = MyRange.PUBLIC;} 
