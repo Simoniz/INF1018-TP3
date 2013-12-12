@@ -135,6 +135,7 @@ public class JavaParser
         long parseTime = 0;
         long startTime = 0;
         long stopTime = 0;
+        // /home/mathieu/workspace/inf1010_client_2/src/Client.java
         if (args.length == 0)
         {
             System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Reading from standard input . . .");
@@ -167,7 +168,7 @@ public class JavaParser
             startTime = System.currentTimeMillis();	
 
 
-  	    //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
+  	    //Crï¿½e un JavaFile pour ce fichier et l'ajoute ï¿½ l'ObjectManager.
    	    JavaFile jf = new JavaFile(filename);	    	
 	    parser.om.push(jf);	
 
@@ -175,7 +176,7 @@ public class JavaParser
             parser.CompilationUnit();
 		
 
-	    //Affiche le résultat
+	    //Affiche le rï¿½sultat
             parser.showResults();
 
             stopTime = System.currentTimeMillis();
@@ -207,7 +208,7 @@ public class JavaParser
         token_source = new JavaParserTokenManager(jj_input_stream);
         this.ReInit(stream);    
         
-        //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
+        //Crï¿½e un JavaFile pour ce fichier et l'ajoute ï¿½ l'ObjectManager.
         JavaFile jf = new JavaFile(file);
         this.om.push(jf);
         
@@ -224,22 +225,16 @@ public class JavaParser
 		//Affiche le package du fichier
 		JavaFile javaFile;
 		javaFile = (JavaFile) this.om.get(0);
-		System.out.println("Informations capturees du fichier :" + javaFile.get_File().getName());
-		System.out.println("Package: " + javaFile.get_Package() + "\n");	
-
-		//Affiche les importations
-		System.out.println("Imports :");
-		ListIterator i = javaFile.get_importList().listIterator();
-	   	while(i.hasNext()){
-			System.out.println("  " + ((Import)i.next()).get_path());		
-		}		
-
-		//Stats du JavaFile
-		System.out.println("\nStatistiques du fichier "+ javaFile.get_File().getName()); 
-		System.out.println("   Nombre de classe(s): " + javaFile.get_classList().size());
-		System.out.println("   Nombre de classe(s) Publique(s) : " + javaFile.get_classList().get_classRange(Range.PUBLIC));	
-		System.out.println("   Nombre de classe(s) Privee(s) : " + javaFile.get_classList().get_classRange(Range.PRIVATE));
-		System.out.println("   Nombre de classe(s) Protected : " + javaFile.get_classList().get_classRange(Range.PROTECTED) + "\n");
+ 
+		int nbrClassesTotal = javaFile.get_classList().size();
+		int nbrClassesPublic = javaFile.get_classList().get_classRange(Range.PUBLIC);
+		int nbrClassesPrive = javaFile.get_classList().get_classRange(Range.PRIVATE);
+		int nbrClassesProtected = javaFile.get_classList().get_classRange(Range.PROTECTED);
+		
+		
+		System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);	
+		System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
+		System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\n");
 
 		//Affiche les informations de chaque classes
 		System.out.println("Classes du fichier:");
@@ -263,7 +258,7 @@ public class JavaParser
 			System.out.println("");	
 
 
-			//Affiche les méthodes
+			//Affiche les mï¿½thodes
 			 x= c.methodlist.listIterator();
 	   		while(x.hasNext()){
 				Method m = (Method)x.next();
@@ -271,7 +266,8 @@ public class JavaParser
 				System.out.println("   Sa portee: " + m.range.toString() +"\n");	
 
 				//Affiche les simple stats
-				System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());							
+				System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
+				
 				System.out.println("       Liste d'attributs :");
 				ListIterator y = m.attributelist.listIterator();
 				while(y.hasNext())
@@ -635,7 +631,7 @@ void UnmodifiedClassDeclaration(Range r) :
 {
   "class" tNom = <IDENTIFIER> [ "extends" strExtends = Name() ] [ "implements" NameList(mjfm.actClass) ]
 
-  //Ajoute la classe à un parent.
+  //Ajoute la classe ï¿½ un parent.
   {
    mjfm.actClass.nom = tNom.toString();
    mjfm.actClass.superClass = strExtends;
@@ -788,9 +784,9 @@ void FieldDeclaration() :
  a.set_Name(strName);
  a.set_Type(strType);
 
- //Ajoute à notre manager l'attribut.
+ //Ajoute ï¿½ notre manager l'attribut.
  om.addToTopObject(a);
- om.pop(); 			//Enlève de la pile...
+ om.pop(); 			//Enlï¿½ve de la pile...
 }
 
 
@@ -804,9 +800,9 @@ void FieldDeclaration() :
   a.set_Type(strType);
 
 
-  //Ajoute à notre manager l'attribut.
+  //Ajoute ï¿½ notre manager l'attribut.
   om.addToTopObject(a);
-  om.pop(); 			//Enlève de la pile...
+  om.pop(); 			//Enlï¿½ve de la pile...
 }
 
   )* ";"
@@ -864,7 +860,7 @@ void MethodDeclaration() :
    | "native" | "synchronized" | "strictfp")*
   strResult = ResultType() m = MethodDeclarator(mm) [ "throws" NameListThrows(mm) ]
   ( 
-   //On est dans la méthode....
+   //On est dans la mï¿½thode....
    {
    	mm.returnType = strResult;
     mjfm.actClass.methods.add(mm);
@@ -873,7 +869,7 @@ void MethodDeclaration() :
     om.addToTopObject(m);
    }
    Block()
-   //On n'est plus dans la méthode.... 
+   //On n'est plus dans la mï¿½thode.... 
    {om.pop();}
   | ";" )
 }
@@ -1398,7 +1394,7 @@ void LocalVariableDeclaration() :
 {
   [ "final" {range.Final = true;} ] strType = Type() strId = VariableDeclarator() 
 
-//Ajoute l'attribu à la structure parente
+//Ajoute l'attribu ï¿½ la structure parente
 {
   a.set_Name(strId);
   a.set_Type(strType);
@@ -1411,7 +1407,7 @@ void LocalVariableDeclaration() :
 ( "," strId = VariableDeclarator() 
 
 
-//Ajoute l'attribu à la structure parente
+//Ajoute l'attribu ï¿½ la structure parente
 {
   a = new Attribute();
   a.range = range;
