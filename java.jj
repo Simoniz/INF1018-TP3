@@ -135,7 +135,7 @@ public class JavaParser
         long parseTime = 0;
         long startTime = 0;
         long stopTime = 0;
-        // /home/mathieu/workspace/inf1010_client_2/src/Client.java
+        // //home//mathieu//workspace//inf1010_client_2//src//Client.java
         if (args.length == 0)
         {
             System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Reading from standard input . . .");
@@ -231,7 +231,7 @@ public class JavaParser
 		int nbrClassesPrive = javaFile.get_classList().get_classRange(Range.PRIVATE);
 		int nbrClassesProtected = javaFile.get_classList().get_classRange(Range.PROTECTED);
 		
-		
+		System.out.println("Nbr classes :" + nbrClassesTotal);
 		System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);	
 		System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
 		System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\n");

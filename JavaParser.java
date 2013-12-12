@@ -17,6 +17,7 @@ public class JavaParser implements JavaParserConstants {
         long parseTime = 0;
         long startTime = 0;
         long stopTime = 0;
+        // //home//mathieu//workspace//inf1010_client_2//src//Client.java
         if (args.length == 0)
         {
             System.out.println("Java Parser Version 1.1 (for Java1.4 code):  Reading from standard input . . .");
@@ -49,7 +50,7 @@ public class JavaParser implements JavaParserConstants {
             startTime = System.currentTimeMillis();
 
 
-            //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
+            //Crï¿½e un JavaFile pour ce fichier et l'ajoute ï¿½ l'ObjectManager.
             JavaFile jf = new JavaFile(filename);
             parser.om.push(jf);
 
@@ -57,7 +58,7 @@ public class JavaParser implements JavaParserConstants {
             parser.CompilationUnit();
 
 
-            //Affiche le résultat
+            //Affiche le rï¿½sultat
             parser.showResults();
 
             stopTime = System.currentTimeMillis();
@@ -89,7 +90,7 @@ public class JavaParser implements JavaParserConstants {
         token_source = new JavaParserTokenManager(jj_input_stream);
         this.ReInit(stream);
 
-        //Crée un JavaFile pour ce fichier et l'ajoute à l'ObjectManager.
+        //Crï¿½e un JavaFile pour ce fichier et l'ajoute ï¿½ l'ObjectManager.
         JavaFile jf = new JavaFile(file);
         this.om.push(jf);
 
@@ -106,26 +107,21 @@ public class JavaParser implements JavaParserConstants {
                 //Affiche le package du fichier
                 JavaFile javaFile;
                 javaFile = (JavaFile) this.om.get(0);
-                System.out.println("Informations capturees du fichier :" + javaFile.get_File().getName());
-                System.out.println("Package: " + javaFile.get_Package() + "\u005cn");
 
-                //Affiche les importations
-                System.out.println("Imports :");
-                ListIterator i = javaFile.get_importList().listIterator();
-                while(i.hasNext()){
-                        System.out.println("  " + ((Import)i.next()).get_path());
-                }
+                int nbrClassesTotal = javaFile.get_classList().size();
+                int nbrClassesPublic = javaFile.get_classList().get_classRange(Range.PUBLIC);
+                int nbrClassesPrive = javaFile.get_classList().get_classRange(Range.PRIVATE);
+                int nbrClassesProtected = javaFile.get_classList().get_classRange(Range.PROTECTED);
 
-                //Stats du JavaFile
-                System.out.println("\u005cnStatistiques du fichier "+ javaFile.get_File().getName());
-                System.out.println("   Nombre de classe(s): " + javaFile.get_classList().size());
-                System.out.println("   Nombre de classe(s) Publique(s) : " + javaFile.get_classList().get_classRange(Range.PUBLIC));
-                System.out.println("   Nombre de classe(s) Privee(s) : " + javaFile.get_classList().get_classRange(Range.PRIVATE));
-                System.out.println("   Nombre de classe(s) Protected : " + javaFile.get_classList().get_classRange(Range.PROTECTED) + "\u005cn");
+                System.out.println("Nbr classes :" + nbrClassesTotal);
+                System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);
+                System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
+                System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\u005cn");
 
                 //Affiche les informations de chaque classes
                 System.out.println("Classes du fichier:");
-                i = javaFile.get_classList().listIterator();
+                
+                ListIterator i = javaFile.get_classList().listIterator();
                 while(i.hasNext()){
                         DescriptionClass c = (DescriptionClass)i.next();
                         System.out.println(" +" + c.get_Name() + "\u005cn");
@@ -145,7 +141,7 @@ public class JavaParser implements JavaParserConstants {
                         System.out.println("");
 
 
-                        //Affiche les méthodes
+                        //Affiche les mï¿½thodes
                          x= c.methodlist.listIterator();
                         while(x.hasNext()){
                                 Method m = (Method)x.next();
@@ -154,6 +150,7 @@ public class JavaParser implements JavaParserConstants {
 
                                 //Affiche les simple stats
                                 System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
+
                                 System.out.println("       Liste d'attributs :");
                                 ListIterator y = m.attributelist.listIterator();
                                 while(y.hasNext())
@@ -797,9 +794,9 @@ public class JavaParser implements JavaParserConstants {
  a.set_Name(strName);
  a.set_Type(strType);
 
- //Ajoute à notre manager l'attribut.
+ //Ajoute ï¿½ notre manager l'attribut.
  om.addToTopObject(a);
- om.pop();                      //Enlève de la pile...
+ om.pop();                      //Enlï¿½ve de la pile...
 
     label_11:
     while (true) {
@@ -819,9 +816,9 @@ public class JavaParser implements JavaParserConstants {
   a.set_Type(strType);
 
 
-  //Ajoute à notre manager l'attribut.
+  //Ajoute ï¿½ notre manager l'attribut.
   om.addToTopObject(a);
-  om.pop();                     //Enlève de la pile...
+  om.pop();                     //Enlï¿½ve de la pile...
 
     }
     jj_consume_token(SEMICOLON);
