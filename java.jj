@@ -283,54 +283,56 @@ public class JavaParser
 		JavaFile javaFile;
 		ListIterator fileIterator = this.om.listIterator();
 		
-		int nbrClassesTotal = 0;
-		int nbrClassesPublic = 0;
-		int nbrClassesPrive = 0;
-		int nbrClassesProtected = 0;
-		
-		
 		while (fileIterator.hasNext()) {
 			javaFile = (JavaFile)fileIterator.next();
 	 
-			nbrClassesTotal += javaFile.get_classList().size();
-			nbrClassesPublic += javaFile.get_classList().get_classRange(Range.PUBLIC);
-			nbrClassesPrive += javaFile.get_classList().get_classRange(Range.PRIVATE);
-			nbrClassesProtected += javaFile.get_classList().get_classRange(Range.PROTECTED);
-			
-			System.out.println("Nbr classes Total :" + nbrClassesTotal);
-			System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);	
-			System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
-			System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\n");
-	
 			//Affiche les informations de chaque classes
 			System.out.println("Classes du fichier:");
 			ListIterator i = javaFile.get_classList().listIterator();
 		   	
 			// ici on itere sur chaque classe du prog
 			while(i.hasNext()){
-		   		
+				int nbrAttributsTotal     = 0;
+				int nbrAttributsPublic    = 0;
+				int nbrAttributsPrive     = 0;
+				int nbrAttributsProtected = 0;
+				
 				DescriptionClass c = (DescriptionClass)i.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
 	
-				//Affiche les simple stats
-				System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());
-				System.out.println("    Nombre de methode(s): " + c.methodlist.size());
-				System.out.println("    Nombre de methode(s) Publique(s) : " + 					  c.methodlist.get_methodsRange(Range.PUBLIC));	
-				System.out.println("    Nombre de methode(s) Privee(s) : " + 					  c.methodlist.get_methodsRange(Range.PRIVATE) );
-				System.out.println("    Nombre de methode(s) Protected : " + 					c.methodlist.get_methodsRange(Range.PROTECTED) + "\n");
-	
+				/*
+				 * Nombre de sous-classe(s): " + c.classlist.size());
+				 * Nombre de methode(s): " + c.methodlist.size());
+				 * Nombre de methode(s) Publique(s) : " + c.methodlist.get_methodsRange(Range.PUBLIC));	
+				 */
+
 				//Affiche les attributs
 				System.out.println("    Liste d'attributs de la classe:");
 				ListIterator x = c.attributelist.listIterator();
-				while(x.hasNext())
-				    System.out.println("      " + ((Attribute)x.next()).toString()); // toString()
+				
+				nbrAttributsTotal     = c.attributelist.size();
+				nbrAttributsPublic    = c.attributelist.get_AttributesRange(Range.PUBLIC);
+				nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
+				nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
+				
+				System.out.println("    Nombre d'attribut(s):     " + nbrAttributsTotal);
+				System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+				System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+				System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+				
+				// Affiche général
+				while(x.hasNext()) {
+				    Attribute attr = ((Attribute)x.next());					
+					System.out.println("      " + attr.toString());
+				}
 				System.out.println("");	
 	
 	
 				//Affiche les mï¿½thodes
 				 x= c.methodlist.listIterator();
 		   		while(x.hasNext()){
-					Method m = (Method)x.next();
+					/*
+		   			Method m = (Method)x.next();
 					System.out.println("   +" + m.toString());
 					System.out.println("   Sa portee: " + m.range.toString() +"\n");	
 			
@@ -343,6 +345,7 @@ public class JavaParser
 					while(y.hasNext())
 						System.out.println("          " +((Attribute)y.next()).toString());
 					System.out.println("");
+					*/
 				}
 	
 			}
