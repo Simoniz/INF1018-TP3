@@ -165,61 +165,75 @@ public class JavaParser implements JavaParserConstants {
                 JavaFile javaFile;
                 ListIterator fileIterator = this.om.listIterator();
 
-                int nbrClassesTotal = 0;
-                int nbrClassesPublic = 0;
-                int nbrClassesPrive = 0;
-                int nbrClassesProtected = 0;
-
+                // On itere sur chaque fichiers
                 while (fileIterator.hasNext()) {
                         javaFile = (JavaFile)fileIterator.next();
-
-                        nbrClassesTotal += javaFile.get_classList().size();
-
 
                         //Affiche les informations de chaque classes
                         System.out.println("Classes du fichier:");
                         ListIterator i = javaFile.get_classList().listIterator();
 
                         while(i.hasNext()){
+                                int nbrAttributsTotal     = 0;
+                                int nbrAttributsPublic    = 0;
+                                int nbrAttributsPrive     = 0;
+                                int nbrAttributsProtected = 0;
 
                                 DescriptionClass c = (DescriptionClass)i.next();
                                 System.out.println(" +" + c.get_Name() + "\u005cn");
 
 
-                                AttributeList t = c.attributelist; // contient un ArrayList de tous les nom d'attributs avec leur type en string
-                                
+                                AttributeList t = c.attributelist;
 
-                                //Affiche les simple stats
-                                System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());
-                                System.out.println("    Nombre de methode(s): " + c.methodlist.size());
-                                System.out.println("    Nombre de methode(s) Publique(s) : " +                                    c.methodlist.get_methodsRange(Range.PUBLIC));
-                                System.out.println("    Nombre de methode(s) Privee(s) : " +                                      c.methodlist.get_methodsRange(Range.PRIVATE) );
-                                System.out.println("    Nombre de methode(s) Protected : " +                                    c.methodlist.get_methodsRange(Range.PROTECTED) + "\u005cn");
+                                /*
+				 * Nombre de sous-classe(s): " + c.classlist.size());
+				 * Nombre de methode(s): " + c.methodlist.size());
+				 * Nombre de methode(s) Publique(s) : " + c.methodlist.get_methodsRange(Range.PUBLIC));	
+				 */
 
                                 //Affiche les attributs
-                                System.out.println("    Liste d'attributs de la classe:");
+                                System.out.println("    Pourcentage de la port\ufffde des attributs de la classe:");
                                 ListIterator x = c.attributelist.listIterator();
-                                while(x.hasNext())
-                                    System.out.println("      " + ((Attribute)x.next()).toString()); // toString()
+
+                                // Question #1
+                                nbrAttributsTotal     = c.attributelist.size();
+                                nbrAttributsPublic    = c.attributelist.get_AttributesRange(Range.PUBLIC);
+                                nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
+                                nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
+
+                                System.out.println("    Nombre d'attribut(s):     " + nbrAttributsTotal);
+                                System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+                                System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+                                System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+
+
+                                // Affiche g�n�ral
+                                while(x.hasNext()) {
+                                        Attribute attr = ((Attribute)x.next());
+                                  //  System.out.println("      " + attr.toString());
+                                }
                                 System.out.println("");
 
 
                                 //Affiche les m�thodes
                                  x= c.methodlist.listIterator();
                                 while(x.hasNext()){
+
                                         Method m = (Method)x.next();
-                                        System.out.println("   +" + m.toString());
-                                        System.out.println("   Sa portee: " + m.range.toString() +"\u005cn");
-
-
-                                        //Affiche les simple stats
-                                        System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
-
-                                        System.out.println("       Liste d'attributs :");
-                                        ListIterator y = m.attributelist.listIterator();
-                                        while(y.hasNext())
-                                                System.out.println("          " +((Attribute)y.next()).toString());
-                                        System.out.println("");
+                                        /*
+					System.out.println("   +" + m.toString());
+					System.out.println("   Sa portee: " + m.range.toString() +"\n");	
+			
+	
+					//Affiche les simple stats
+					System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
+					
+					System.out.println("       Liste d'attributs :");
+					ListIterator y = m.attributelist.listIterator();
+					while(y.hasNext())
+						System.out.println("          " +((Attribute)y.next()).toString());
+					System.out.println("");
+					*/
                                 }
 
                         }
@@ -3374,80 +3388,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(29, xla); }
   }
 
-  private boolean jj_3R_180() {
-    if (jj_3R_187()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_140() {
-    if (jj_scan_token(SWITCH)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_61()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    if (jj_scan_token(LBRACE)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_262()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(RBRACE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_179() {
-    if (jj_3R_186()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_277() {
-    if (jj_3R_120()) return true;
-    if (jj_3R_61()) return true;
-    return false;
-  }
-
-  private boolean jj_3_2() {
-    if (jj_3R_44()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_176() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3R_179()) {
-    jj_scanpos = xsp;
-    if (jj_3R_180()) {
-    jj_scanpos = xsp;
-    if (jj_3R_181()) {
-    jj_scanpos = xsp;
-    if (jj_3R_182()) {
-    jj_scanpos = xsp;
-    if (jj_3R_183()) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(82)) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_272() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(98)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(99)) {
-    jj_scanpos = xsp;
-    if (jj_3R_277()) return true;
-    }
-    }
-    return false;
-  }
-
   private boolean jj_3R_156() {
     if (jj_3R_54()) return true;
     Token xsp;
@@ -5788,6 +5728,80 @@ public class JavaParser implements JavaParserConstants {
 
   private boolean jj_3R_181() {
     if (jj_3R_188()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_180() {
+    if (jj_3R_187()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_140() {
+    if (jj_scan_token(SWITCH)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_61()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_262()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_179() {
+    if (jj_3R_186()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_277() {
+    if (jj_3R_120()) return true;
+    if (jj_3R_61()) return true;
+    return false;
+  }
+
+  private boolean jj_3_2() {
+    if (jj_3R_44()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_176() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_2()) {
+    jj_scanpos = xsp;
+    if (jj_3R_179()) {
+    jj_scanpos = xsp;
+    if (jj_3R_180()) {
+    jj_scanpos = xsp;
+    if (jj_3R_181()) {
+    jj_scanpos = xsp;
+    if (jj_3R_182()) {
+    jj_scanpos = xsp;
+    if (jj_3R_183()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(82)) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_272() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(98)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(99)) {
+    jj_scanpos = xsp;
+    if (jj_3R_277()) return true;
+    }
+    }
     return false;
   }
 
