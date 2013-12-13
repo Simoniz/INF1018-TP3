@@ -301,6 +301,10 @@ public class JavaParser
 				DescriptionClass c = (DescriptionClass)i.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
 	
+				// Question #3
+				String superName = c.get_superClassName().equals("") ? "-- Aucune --" : c.get_superClassName();
+				System.out.println("    Héritage avec la classe: " + superName + "\n");
+				
 				/*
 				 * Nombre de sous-classe(s): " + c.classlist.size());
 				 * Nombre de methode(s): " + c.methodlist.size());
@@ -321,7 +325,6 @@ public class JavaParser
 				System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
 				System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
 				System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
-				
 				
 				// Affiche général
 				while(x.hasNext()) {

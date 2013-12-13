@@ -183,6 +183,10 @@ public class JavaParser implements JavaParserConstants {
                                 DescriptionClass c = (DescriptionClass)i.next();
                                 System.out.println(" +" + c.get_Name() + "\u005cn");
 
+                                // Question #3
+                                String superName = c.get_superClassName().equals("") ? "-- Aucune --" : c.get_superClassName();
+                                System.out.println("    H\u00e9ritage avec la classe: " + superName + "\u005cn");
+
                                 /*
 				 * Nombre de sous-classe(s): " + c.classlist.size());
 				 * Nombre de methode(s): " + c.methodlist.size());
@@ -203,7 +207,6 @@ public class JavaParser implements JavaParserConstants {
                                 System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
                                 System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
                                 System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
-
 
                                 // Affiche général
                                 while(x.hasNext()) {
@@ -3386,14 +3389,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(29, xla); }
   }
 
-  private boolean jj_3R_156() {
-    if (jj_3R_54()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_272()) jj_scanpos = xsp;
-    return false;
-  }
-
   private boolean jj_3R_155() {
     if (jj_3R_163()) return true;
     return false;
@@ -5800,6 +5795,14 @@ public class JavaParser implements JavaParserConstants {
     if (jj_3R_277()) return true;
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_156() {
+    if (jj_3R_54()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_272()) jj_scanpos = xsp;
     return false;
   }
 
