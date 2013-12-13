@@ -308,9 +308,10 @@ public class JavaParser
 				 */
 
 				//Affiche les attributs
-				System.out.println("    Liste d'attributs de la classe:");
+				System.out.println("    Pourcentage de la portée des attributs de la classe:");
 				ListIterator x = c.attributelist.listIterator();
 				
+				// Question #1
 				nbrAttributsTotal     = c.attributelist.size();
 				nbrAttributsPublic    = c.attributelist.get_AttributesRange(Range.PUBLIC);
 				nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
@@ -320,6 +321,7 @@ public class JavaParser
 				System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
 				System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
 				System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+				
 				
 				// Affiche général
 				while(x.hasNext()) {
