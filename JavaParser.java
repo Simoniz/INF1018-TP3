@@ -190,9 +190,10 @@ public class JavaParser implements JavaParserConstants {
 				 */
 
                                 //Affiche les attributs
-                                System.out.println("    Liste d'attributs de la classe:");
+                                System.out.println("    Pourcentage de la port\u00e9e des attributs de la classe:");
                                 ListIterator x = c.attributelist.listIterator();
 
+                                // Question #1
                                 nbrAttributsTotal     = c.attributelist.size();
                                 nbrAttributsPublic    = c.attributelist.get_AttributesRange(Range.PUBLIC);
                                 nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
@@ -202,6 +203,7 @@ public class JavaParser implements JavaParserConstants {
                                 System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
                                 System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
                                 System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+
 
                                 // Affiche général
                                 while(x.hasNext()) {
@@ -3384,19 +3386,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(29, xla); }
   }
 
-  private boolean jj_3R_272() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(98)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(99)) {
-    jj_scanpos = xsp;
-    if (jj_3R_277()) return true;
-    }
-    }
-    return false;
-  }
-
   private boolean jj_3R_156() {
     if (jj_3R_54()) return true;
     Token xsp;
@@ -5796,6 +5785,19 @@ public class JavaParser implements JavaParserConstants {
     }
     }
     }
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_272() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(98)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(99)) {
+    jj_scanpos = xsp;
+    if (jj_3R_277()) return true;
     }
     }
     return false;
