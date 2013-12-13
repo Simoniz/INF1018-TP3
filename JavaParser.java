@@ -159,7 +159,7 @@ public class JavaParser implements JavaParserConstants {
         }
         }
 
-        public void showResults(){
+        public void showResults() {
 
                 //Affiche le package du fichier
                 JavaFile javaFile;
@@ -170,29 +170,24 @@ public class JavaParser implements JavaParserConstants {
                 int nbrClassesPrive = 0;
                 int nbrClassesProtected = 0;
 
-
                 while (fileIterator.hasNext()) {
                         javaFile = (JavaFile)fileIterator.next();
 
                         nbrClassesTotal += javaFile.get_classList().size();
-                        nbrClassesPublic += javaFile.get_classList().get_classRange(Range.PUBLIC);
-                        nbrClassesPrive += javaFile.get_classList().get_classRange(Range.PRIVATE);
-                        nbrClassesProtected += javaFile.get_classList().get_classRange(Range.PROTECTED);
 
-                        System.out.println("Nbr classes Total :" + nbrClassesTotal);
-                        System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);
-                        System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
-                        System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\u005cn");
 
                         //Affiche les informations de chaque classes
                         System.out.println("Classes du fichier:");
                         ListIterator i = javaFile.get_classList().listIterator();
 
-                        // ici on itere sur chaque classe du prog
                         while(i.hasNext()){
 
                                 DescriptionClass c = (DescriptionClass)i.next();
                                 System.out.println(" +" + c.get_Name() + "\u005cn");
+
+
+                                AttributeList t = c.attributelist; // contient un ArrayList de tous les nom d'attributs avec leur type en string
+                                
 
                                 //Affiche les simple stats
                                 System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());
@@ -3379,6 +3374,31 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(29, xla); }
   }
 
+  private boolean jj_3R_180() {
+    if (jj_3R_187()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_140() {
+    if (jj_scan_token(SWITCH)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_61()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_262()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_179() {
+    if (jj_3R_186()) return true;
+    return false;
+  }
+
   private boolean jj_3R_277() {
     if (jj_3R_120()) return true;
     if (jj_3R_61()) return true;
@@ -5768,31 +5788,6 @@ public class JavaParser implements JavaParserConstants {
 
   private boolean jj_3R_181() {
     if (jj_3R_188()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_180() {
-    if (jj_3R_187()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_140() {
-    if (jj_scan_token(SWITCH)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_61()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    if (jj_scan_token(LBRACE)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_262()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(RBRACE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_179() {
-    if (jj_3R_186()) return true;
     return false;
   }
 

@@ -277,7 +277,7 @@ public class JavaParser
         }
 	}
 
-    	public void showResults(){
+    	public void showResults() {
 	
 		//Affiche le package du fichier
 		JavaFile javaFile;
@@ -292,14 +292,7 @@ public class JavaParser
 			javaFile = (JavaFile)fileIterator.next();
 
 			nbrClassesTotal += javaFile.get_classList().size();
-			nbrClassesPublic += javaFile.get_classList().get_classRange(Range.PUBLIC);
-			nbrClassesPrive += javaFile.get_classList().get_classRange(Range.PRIVATE);
-			nbrClassesProtected += javaFile.get_classList().get_classRange(Range.PROTECTED);
 			
-			System.out.println("Nbr classes Total :" + nbrClassesTotal);
-			System.out.println("Classes public (%) : " +  nbrClassesPublic / nbrClassesTotal * 100);	
-			System.out.println("Classes prive (%) : " + nbrClassesPrive / nbrClassesTotal * 100);
-			System.out.println("Classes protected (%) : " + nbrClassesProtected / nbrClassesTotal * 100 + "\n");
 	
 			//Affiche les informations de chaque classes
 			System.out.println("Classes du fichier:");
@@ -309,6 +302,9 @@ public class JavaParser
 		   		
 				DescriptionClass c = (DescriptionClass)i.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
+				
+			
+				AttributeList t = c.attributelist;
 	
 				//Affiche les simple stats
 				System.out.println("    Nombre de sous-classe(s): " + c.classlist.size());

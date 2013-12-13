@@ -11,8 +11,10 @@ public class Attribute implements HaveRange{
     private String m_Name = "";
 
     private String m_Type = "";
+    
+    public Type type = new Type(); // type de l'attribut
 
-    public Range range = new Range(); //La portée de l'attribut
+    public Range range = new Range(); //La portï¿½e de l'attribut
 
     /*
      * ============================================================================
@@ -32,7 +34,7 @@ public class Attribute implements HaveRange{
      */
 
     /**
-     * Redéfinit un attribut avec un nouveau nom et type
+     * Redï¿½finit un attribut avec un nouveau nom et type
      * 
      * @param nom
      *            String : Le nom de l'attribut
@@ -70,14 +72,17 @@ public class Attribute implements HaveRange{
      * Method
      * ===========================================================================
      */
-
+    
+    public boolean isSimpleAttribute() {
+    	return this.type.contains(this.m_Type);
+    }
 
     /**
-     * Vérifie si deux attributs son égales.
+     * Vï¿½rifie si deux attributs son ï¿½gales.
      * 
      * @param Object
-     *            att : L'attribut à comparer.
-     * @return boolean : Vrai si l'attribut en paramètre est égale à celu-ci.
+     *            att : L'attribut ï¿½ comparer.
+     * @return boolean : Vrai si l'attribut en paramï¿½tre est ï¿½gale ï¿½ celu-ci.
      */
     public boolean equals(Object att) {
         boolean bEquals = false;

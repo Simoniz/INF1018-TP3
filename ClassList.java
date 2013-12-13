@@ -44,7 +44,7 @@ public class ClassList
 
   /**
    * Fonction calculant le nombre de classes
-   * que la liste possède selon un range(public, private, protected).
+   * que la liste possï¿½de selon un range(public, private, protected).
    *
    * @param iRange int : Le range
    * @return int : Le nombre de classes dans la liste.
@@ -61,6 +61,19 @@ public class ClassList
     }
     return iTotal;
   }
+  
+  
+  /*public int get_type(int iType) {
+	  int iTotal = 0;
+
+	    ListIterator iterator = this.listIterator();
+	    while (iterator.hasNext()) {
+	      if ( (this.get_next(iterator)).type.get_Type() == iType) {
+	        iTotal++;
+	      }
+	    }
+	    return iTotal;
+  }*/
 
   /*============================================================================
     List Iterator
