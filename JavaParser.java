@@ -165,6 +165,7 @@ public class JavaParser implements JavaParserConstants {
                 JavaFile javaFile;
                 ListIterator fileIterator = this.om.listIterator();
 
+                // On itere sur chaque fichiers
                 while (fileIterator.hasNext()) {
                         javaFile = (JavaFile)fileIterator.next();
 
@@ -204,8 +205,8 @@ public class JavaParser implements JavaParserConstants {
 
                                 // Affiche général
                                 while(x.hasNext()) {
-                                    Attribute attr = ((Attribute)x.next());
-                                        System.out.println("      " + attr.toString());
+                                  //  Attribute attr = ((Attribute)x.next());					
+                                  //  System.out.println("      " + attr.toString());
                                 }
                                 System.out.println("");
 
