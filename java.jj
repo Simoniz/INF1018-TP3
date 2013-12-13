@@ -277,7 +277,7 @@ public class JavaParser
         }
 	}
 
-    	public void showResults(){
+    	public void showResults() {
 	
 		//Affiche le package du fichier
 		JavaFile javaFile;
@@ -286,12 +286,11 @@ public class JavaParser
 		// On itere sur chaque fichiers
 		while (fileIterator.hasNext()) {
 			javaFile = (JavaFile)fileIterator.next();
-	 
+
 			//Affiche les informations de chaque classes
 			System.out.println("Classes du fichier:");
 			ListIterator i = javaFile.get_classList().listIterator();
 		   	
-			// ici on itere sur chaque classe du prog
 			while(i.hasNext()){
 				int nbrAttributsTotal     = 0;
 				int nbrAttributsPublic    = 0;
@@ -300,6 +299,9 @@ public class JavaParser
 				
 				DescriptionClass c = (DescriptionClass)i.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
+				
+			
+				AttributeList t = c.attributelist;
 	
 				// Question #3
 				String superName = c.get_superClassName().equals("") ? "-- Aucune --" : c.get_superClassName();
@@ -312,7 +314,7 @@ public class JavaParser
 				 */
 
 				//Affiche les attributs
-				System.out.println("    Pourcentage de la portée des attributs de la classe:");
+				System.out.println("    Pourcentage de la portï¿½e des attributs de la classe:");
 				ListIterator x = c.attributelist.listIterator();
 				
 				// Question #1
@@ -321,12 +323,24 @@ public class JavaParser
 				nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
 				nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
 				
-				System.out.println("    Nombre d'attribut(s):     " + nbrAttributsTotal);
-				System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
-				System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
-				System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+				System.out.println("    Nombre d'attribut : " + nbrAttributsTotal);
+				System.out.println("    Attribut(s) Publique : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+				System.out.println("    Attribut(s) Privee : " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+				System.out.println("    Attribut(s) Protected : " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+
+				System.out.println("    Attribut(s) type simple : " + ((double)c.attributelist.get_AttributeTypeSimple() / nbrAttributsTotal) * 100 + "%");
+				System.out.println("    Attribut(s) type reference : " + ((double)c.attributelist.get_AttributeTypeReference() / nbrAttributsTotal) * 100 + "%");
+				
+				System.out.println("    Liste des attributs : \n");
 				
 				// Affiche général
+				 ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
+	             while(lstAttributs.hasNext()) {
+	                     String name = ((String)lstAttributs.next());
+	                     System.out.println("       - " + name + "\u005cn");
+	             }
+
+	             
 				while(x.hasNext()) {
 					Attribute attr = ((Attribute)x.next());					
 				  //  System.out.println("      " + attr.toString());

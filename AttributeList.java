@@ -29,8 +29,8 @@ public class AttributeList
   /**
    * Recherche un attribut d'un nom en particulier.
    *
-   * @param attributeName String : Le nom de l'attribut à rechercher.
-   * @return Attribute : L'attribut trouvé. Null si non trouvé.
+   * @param attributeName String : Le nom de l'attribut ï¿½ rechercher.
+   * @return Attribute : L'attribut trouvï¿½. Null si non trouvï¿½.
    */
   public Attribute get(String name) {
     Attribute returnObject = null;
@@ -55,7 +55,7 @@ public class AttributeList
 
 
   /**
-   * Indique si deux listes d'attibuts sont égales
+   * Indique si deux listes d'attibuts sont ï¿½gales
    *
    * @param Object list : La liste avec laquelle on compare.
    * @return boolean : Vrai si les deux listes sont identiques.
@@ -90,7 +90,7 @@ public class AttributeList
 
   /**
    * Fonction calculant le nombre d'attributs
-   * que la liste possède selon un range(public, private, protected).
+   * que la liste possï¿½de selon un range(public, private, protected).
    *
    * @param iRange int : Le range
    * @return int : Le nombre d'attributs dans la liste.
@@ -108,10 +108,45 @@ public class AttributeList
     return iTotal;
   }
 
-
+  	public int get_AttributeTypeSimple() {
+        int iTotal = 0;
+	  
+	  	ListIterator iterator = this.listIterator();
+	    while (iterator.hasNext()) {
+	      if ((this.get_next(iterator)).isSimpleAttribute()) {
+	        iTotal++;
+	      }
+	    }
+	    return iTotal;
+  }
+  
+  public int get_AttributeTypeReference() {
+	  int iTotal = 0;
+	  
+	  	ListIterator iterator = this.listIterator();
+	    while (iterator.hasNext()) {
+	      if (!(this.get_next(iterator)).isSimpleAttribute()) {
+	        iTotal++;
+	      }
+	    }
+	    return iTotal;
+  }
+  
+  public ArrayList<String> getAttributsReference() {
+	  ArrayList<String> lst = new ArrayList<String>();
+	  ListIterator iterator = this.listIterator();
+	    while (iterator.hasNext()) {
+	    	Attribute attr = this.get_next(iterator);
+	      if (!attr.isSimpleAttribute()) {
+	    	  lst.add(attr.get_Type());
+	      }
+	    }
+	    
+	    return lst;
+  }
 
   /**
-   * Ajoute un nouvel attribut dans la liste à partir des informations fournis.
+   * Ajoute un nouvel attribut dans la liste ï¿½ partir des informations fournis.
    *
    * @param name String : Le nom de l'attribut
    * @param type String : Son type
@@ -130,7 +165,7 @@ public class AttributeList
    ===========================================================================*/
 
   /**
-   * Retourne un prochain élément
+   * Retourne un prochain ï¿½lï¿½ment
    *
    * @return Attribute
    */
