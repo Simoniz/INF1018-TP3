@@ -290,8 +290,8 @@ public class JavaParser
 		
 		
 		while (this.om.listIterator().hasNext()) {
-			javaFile = (JavaFile) this.om.get(ctr++);
-	 
+			javaFile = (JavaFile) this.om.get(ctr);
+			
 			nbrClassesTotal += javaFile.get_classList().size();
 			nbrClassesPublic += javaFile.get_classList().get_classRange(Range.PUBLIC);
 			nbrClassesPrive += javaFile.get_classList().get_classRange(Range.PRIVATE);
@@ -306,7 +306,6 @@ public class JavaParser
 			System.out.println("Classes du fichier:");
 			ListIterator i = javaFile.get_classList().listIterator();
 		   	
-			// ici on itere sur chaque classe du prog
 			while(i.hasNext()){
 		   		
 				DescriptionClass c = (DescriptionClass)i.next();
