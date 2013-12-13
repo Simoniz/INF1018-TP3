@@ -10,6 +10,7 @@ public class Type {
 	public static final String LONG = "long";
 	public static final String FLOAT = "float";
 	public static final String DOUBLE = "double";
+	public static final String STRING = "string";
 	
 	private ArrayList<String> listTypes;
 	
@@ -23,9 +24,10 @@ public class Type {
 		this.listTypes.add(Type.LONG);
 		this.listTypes.add(Type.FLOAT);
 		this.listTypes.add(Type.DOUBLE);
+		this.listTypes.add(Type.STRING);
 	}
 	
 	public boolean contains(String _type) {
-		return listTypes.contains(_type);
+		return listTypes.contains(_type.toLowerCase());
 	}
 }

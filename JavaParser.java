@@ -201,11 +201,21 @@ public class JavaParser implements JavaParserConstants {
                                 nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
                                 nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
 
-                                System.out.println("    Nombre d'attribut(s):     " + nbrAttributsTotal);
-                                System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
-                                System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
-                                System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+                                System.out.println("    Nombre d'attribut : " + nbrAttributsTotal);
+                                System.out.println("    Attribut(s) Publique : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+                                System.out.println("    Attribut(s) Privee : " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+                                System.out.println("    Attribut(s) Protected : " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
 
+                                System.out.println("    Attribut(s) type simple : " + ((double)c.attributelist.get_AttributeTypeSimple() / nbrAttributsTotal) * 100 + "%");
+                                System.out.println("    Attribut(s) type reference : " + ((double)c.attributelist.get_AttributeTypeReference() / nbrAttributsTotal) * 100 + "%");
+
+                                System.out.println("    Liste des attributs : \u005cn");
+
+                                 ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
+                     while(lstAttributs.hasNext()) {
+                             String name = ((String)lstAttributs.next());
+                             System.out.println("       - " + name + "\u005cn");
+                     }
 
                                 // Affiche g�n�ral
                                 while(x.hasNext()) {
@@ -3388,62 +3398,6 @@ public class JavaParser implements JavaParserConstants {
     finally { jj_save(29, xla); }
   }
 
-  private boolean jj_3R_156() {
-    if (jj_3R_54()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_272()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_155() {
-    if (jj_3R_163()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_217() {
-    if (jj_scan_token(PRIVATE)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_139() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_154()) {
-    jj_scanpos = xsp;
-    if (jj_3R_155()) {
-    jj_scanpos = xsp;
-    if (jj_3R_156()) return true;
-    }
-    }
-    return false;
-  }
-
-  private boolean jj_3R_154() {
-    if (jj_3R_162()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_216() {
-    if (jj_scan_token(PROTECTED)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_215() {
-    if (jj_scan_token(PUBLIC)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_214() {
-    if (jj_scan_token(FINAL)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_213() {
-    if (jj_scan_token(ABSTRACT)) return true;
-    return false;
-  }
-
   private boolean jj_3R_196() {
     Token xsp;
     xsp = jj_scanpos;
@@ -5802,6 +5756,62 @@ public class JavaParser implements JavaParserConstants {
     if (jj_3R_277()) return true;
     }
     }
+    return false;
+  }
+
+  private boolean jj_3R_156() {
+    if (jj_3R_54()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_272()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_155() {
+    if (jj_3R_163()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_217() {
+    if (jj_scan_token(PRIVATE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_139() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_154()) {
+    jj_scanpos = xsp;
+    if (jj_3R_155()) {
+    jj_scanpos = xsp;
+    if (jj_3R_156()) return true;
+    }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_154() {
+    if (jj_3R_162()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_216() {
+    if (jj_scan_token(PROTECTED)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_215() {
+    if (jj_scan_token(PUBLIC)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_214() {
+    if (jj_scan_token(FINAL)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_213() {
+    if (jj_scan_token(ABSTRACT)) return true;
     return false;
   }
 

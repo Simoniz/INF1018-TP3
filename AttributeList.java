@@ -131,6 +131,19 @@ public class AttributeList
 	    }
 	    return iTotal;
   }
+  
+  public ArrayList<String> getAttributsReference() {
+	  ArrayList<String> lst = new ArrayList<String>();
+	  ListIterator iterator = this.listIterator();
+	    while (iterator.hasNext()) {
+	    	Attribute attr = this.get_next(iterator);
+	      if (!attr.isSimpleAttribute()) {
+	    	  lst.add(attr.get_Type());
+	      }
+	    }
+	    
+	    return lst;
+  }
 
   /**
    * Ajoute un nouvel attribut dans la liste � partir des informations fournis.

@@ -319,11 +319,21 @@ public class JavaParser
 				nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
 				nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
 				
-				System.out.println("    Nombre d'attribut(s):     " + nbrAttributsTotal);
-				System.out.println("    Attribut(s) Publique(s) : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
-				System.out.println("    Attribut(s) Privee(s) :   " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
-				System.out.println("    Attribut(s) Protected :   " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+				System.out.println("    Nombre d'attribut : " + nbrAttributsTotal);
+				System.out.println("    Attribut(s) Publique : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+				System.out.println("    Attribut(s) Privee : " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+				System.out.println("    Attribut(s) Protected : " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+
+				System.out.println("    Attribut(s) type simple : " + ((double)c.attributelist.get_AttributeTypeSimple() / nbrAttributsTotal) * 100 + "%");
+				System.out.println("    Attribut(s) type reference : " + ((double)c.attributelist.get_AttributeTypeReference() / nbrAttributsTotal) * 100 + "%");
 				
+				System.out.println("    Liste des attributs : \n");
+				
+				 ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
+	             while(lstAttributs.hasNext()) {
+	                     String name = ((String)lstAttributs.next());
+	                     System.out.println("       - " + name + "\u005cn");
+	             }
 				
 				// Affiche g�n�ral
 				while(x.hasNext()) {
