@@ -205,7 +205,7 @@ public class JavaParser implements JavaParserConstants {
 
                                 // Affiche général
                                 while(x.hasNext()) {
-                                  //  Attribute attr = ((Attribute)x.next());					
+                                        Attribute attr = ((Attribute)x.next());
                                   //  System.out.println("      " + attr.toString());
                                 }
                                 System.out.println("");
@@ -214,8 +214,9 @@ public class JavaParser implements JavaParserConstants {
                                 //Affiche les mï¿½thodes
                                  x= c.methodlist.listIterator();
                                 while(x.hasNext()){
+
+                                        Method m = (Method)x.next();
                                         /*
-		   			Method m = (Method)x.next();
 					System.out.println("   +" + m.toString());
 					System.out.println("   Sa portee: " + m.range.toString() +"\n");	
 			
