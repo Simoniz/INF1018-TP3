@@ -163,7 +163,7 @@ public class JavaParser implements JavaParserConstants {
 
                 //Affiche le package du fichier
                 JavaFile javaFile;
-                int ctr = 0;
+                ListIterator fileIterator = this.om.listIterator();
 
                 int nbrClassesTotal = 0;
                 int nbrClassesPublic = 0;
@@ -171,8 +171,8 @@ public class JavaParser implements JavaParserConstants {
                 int nbrClassesProtected = 0;
 
 
-                while (this.om.listIterator().hasNext()) {
-                        javaFile = (JavaFile) this.om.get(ctr++);
+                while (fileIterator.hasNext()) {
+                        javaFile = (JavaFile)fileIterator.next();
 
                         nbrClassesTotal += javaFile.get_classList().size();
                         nbrClassesPublic += javaFile.get_classList().get_classRange(Range.PUBLIC);
@@ -205,7 +205,7 @@ public class JavaParser implements JavaParserConstants {
                                 System.out.println("    Liste d'attributs de la classe:");
                                 ListIterator x = c.attributelist.listIterator();
                                 while(x.hasNext())
-                                    System.out.println("      " + ((Attribute)x.next()).toString());
+                                    System.out.println("      " + ((Attribute)x.next()).toString()); // toString()
                                 System.out.println("");
 
 
@@ -215,6 +215,7 @@ public class JavaParser implements JavaParserConstants {
                                         Method m = (Method)x.next();
                                         System.out.println("   +" + m.toString());
                                         System.out.println("   Sa portee: " + m.range.toString() +"\u005cn");
+
 
                                         //Affiche les simple stats
                                         System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
