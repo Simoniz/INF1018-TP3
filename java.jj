@@ -1177,11 +1177,24 @@ void CastExpression() :
 void PrimaryExpression() :
 {}
 {
-  PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
+	PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
 }
-
+/*
+ * String Type() :
+{
+  String strReturn = "";
+}
+{
+  ( strReturn = PrimitiveType() | strReturn = Name() ) ( "[" {strReturn += "[";}  "]" {strReturn += "]";} )*
+  {return strReturn;}
+}
+ */
 void PrimaryPrefix() :
-{}
+{
+	String str = "";
+	Method m = new Method();
+	m = om.peek();
+}
 {
   Literal()
 |
@@ -1196,7 +1209,12 @@ void PrimaryPrefix() :
   LOOKAHEAD( ResultType() "." "class" )
   ResultType() "." "class"
 |
-  Name()
+  str = Name()
+  {
+	  m.set_body(str);
+	  om.addToTopObject(m);
+	  om.pop();
+  }
 }
 
 /* Add "." "super" to be compatible with Java 1.2, 
