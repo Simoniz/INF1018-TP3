@@ -216,30 +216,6 @@ public class JavaParser
 	                    System.out.println("       - " + name);
 	            }
 	            System.out.println("");
-
-	            // Affiche g�n�ral 
-				//while(x.hasNext()) {
-				  //  Attribute attr = ((Attribute)x.next());
-	            
-// START CRITICAL SECTION
-// SB - CHECK THIS SECTION: The following section in comment has impact with Question #4 mr Dargis :D??
-	            /* 
-				System.out.println("    Liste des attributs : \n");
-	
-				ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
-				while(lstAttributs.hasNext()) 
-				{
-					String name = ((String)lstAttributs.next());
-					System.out.println("       - " + name + "\u005cn");
-				}
-	             
-				while(x.hasNext()) {
-					Attribute attr = ((Attribute)x.next());					
-
-				  //  System.out.println("      " + attr.toString());
-				//}
-	*/
-// END CRITICAL SECTION
 	            System.out.println("    Associations dans les methodes: ");
 	            
 				//Affiche les m�thodes
@@ -260,7 +236,9 @@ public class JavaParser
 		   			/*
 					System.out.println("   +" + m.toString());
 					System.out.println("   Sa portee: " + m.range.toString() +"\n");	
-
+	   			 	*/
+		   		}
+		   		
 				// Question #4
 				System.out.println("Affichage du couplage entre classes relatif aux methodes\n");
 				
@@ -268,8 +246,7 @@ public class JavaParser
 		   		while(methodIterator.hasNext()){
 					
 		   			Method m = (Method)methodIterator.next();
-		   			
-					
+		   								
 					/*System.out.println("   Sa portee: " + m.range.toString() +"\n");	
 			
 	
@@ -283,7 +260,7 @@ public class JavaParser
 					System.out.println("");
 					*/
 				}
-	
+		   		
 			}
 		}
 	}
