@@ -178,10 +178,10 @@ public class JavaParser
 				DescriptionClass c = (DescriptionClass)classesIterator.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
 	
-				// Question #3
-				String superName = c.get_superClassName().equals("") ? "-- Aucune --" : c.get_superClassName();
-				System.out.println("    H�ritage avec la classe: " + superName + "\n");
-				
+				// Question #3 - Partie 1 (Heritage)
+				String superName = c.get_superClassName().equals("") ? "(Aucune)" : c.get_superClassName();
+				System.out.println("    Herite de la classe: ");
+				System.out.println("       - " + superName + "\n");
 				/*
 				 * Nombre de sous-classe(s): " + c.classlist.size());
 				 * Nombre de methode(s): " + c.methodlist.size());
@@ -189,7 +189,7 @@ public class JavaParser
 				 */
 
 				//Affiche les attributs
-				System.out.println("    Pourcentage de la port�e des attributs de la classe:");
+				System.out.println("    Statistique de la portee des attributs :");
 				ListIterator x = c.attributelist.listIterator();
 				
 				// Question #1
@@ -197,16 +197,33 @@ public class JavaParser
 				nbrAttributsPublic    = c.attributelist.get_AttributesRange(Range.PUBLIC);
 				nbrAttributsPrive     = c.attributelist.get_AttributesRange(Range.PRIVATE);
 				nbrAttributsProtected = c.attributelist.get_AttributesRange(Range.PROTECTED);
-				
-				System.out.println("    Nombre d'attribut : " + nbrAttributsTotal);
-				System.out.println("    Attribut(s) Publique : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
-				System.out.println("    Attribut(s) Privee : " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
-				System.out.println("    Attribut(s) Protected : " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
+				                   
+				System.out.println("       - Nombre d'attribut(s) : " + nbrAttributsTotal);
+				System.out.println("       - Attribut(s) Publique : " + ((double)nbrAttributsPublic/nbrAttributsTotal)*100    + "%");
+				System.out.println("       - Attribut(s) Privee : " + ((double)nbrAttributsPrive/nbrAttributsTotal)*100     + "%");
+				System.out.println("       - Attribut(s) Protected : " + ((double)nbrAttributsProtected/nbrAttributsTotal)*100 + "%");
 
 				// Question #2
-				System.out.println("    Attribut(s) type simple : " + ((double)c.attributelist.get_AttributeTypeSimple() / nbrAttributsTotal) * 100 + "%");
-				System.out.println("    Attribut(s) type reference : " + ((double)c.attributelist.get_AttributeTypeReference() / nbrAttributsTotal) * 100 + "%");
+				System.out.println("       - Attribut(s) type simple : " + ((double)c.attributelist.get_AttributeTypeSimple() / nbrAttributsTotal) * 100 + "%");
+				System.out.println("       - Attribut(s) type reference : " + ((double)c.attributelist.get_AttributeTypeReference() / nbrAttributsTotal) * 100 + "%");
 				
+				System.out.println("");
+				System.out.println("    Liste des classes ayant une visibilite permanante : ");
+				
+				ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
+	            while(lstAttributs.hasNext()) {
+	                    String name = ((String)lstAttributs.next());
+	                    System.out.println("       - " + name);
+	            }
+	            System.out.println("");
+
+	            // Affiche g�n�ral 
+				//while(x.hasNext()) {
+				  //  Attribute attr = ((Attribute)x.next());
+	            
+// START CRITICAL SECTION
+// SB - CHECK THIS SECTION: The following section in comment has impact with Question #4 mr Dargis :D??
+	            /* 
 				System.out.println("    Liste des attributs : \n");
 	
 				ListIterator lstAttributs = c.attributelist.getAttributsReference().listIterator();
@@ -218,11 +235,32 @@ public class JavaParser
 	             
 				while(x.hasNext()) {
 					Attribute attr = ((Attribute)x.next());					
+
 				  //  System.out.println("      " + attr.toString());
-				}
-				System.out.println("");	
-	
-	
+				//}
+	*/
+// END CRITICAL SECTION
+	            System.out.println("    Associations dans les methodes: ");
+	            
+				//Affiche les m�thodes
+				x= c.methodlist.listIterator();
+		   		while(x.hasNext()){
+					
+		   			Method m = (Method)x.next();
+
+		   			System.out.println("       Methode: " + m.get_Name());
+		   			
+		   			 // Question #3 - Partie 2 (Associations)
+					ListIterator lstAttrInMethod = m.attributelist.getAttributsReference().listIterator();
+		   			while(lstAttrInMethod.hasNext()) {
+		   				String attr = ((String)lstAttrInMethod.next());
+		   				System.out.println("          - " + attr.toString() + " : Lien de composition"); 
+		   			}                      
+		   			System.out.println("");
+		   			/*
+					System.out.println("   +" + m.toString());
+					System.out.println("   Sa portee: " + m.range.toString() +"\n");	
+
 				// Question #4
 				System.out.println("Affichage du couplage entre classes relatif aux methodes\n");
 				
@@ -1193,7 +1231,10 @@ void PrimaryPrefix() :
 {
 	String str = "";
 	Method m = new Method();
-	m = om.peek();
+	
+	if (om.peek() instanceof Method) {
+		m = (Method)om.peek();
+	}
 }
 {
   Literal()
