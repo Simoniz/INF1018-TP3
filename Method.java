@@ -35,7 +35,7 @@ public class Method implements HaveRange {
     //Liste contenant les attributs d�clar�s locals dans la m�thode.
     public AttributeList attributelist = new AttributeList();
 
-
+    public List<MethodCall> listAppels = new ArrayList<MethodCall>();
 
     /*
      * ============================================================================
@@ -120,4 +120,13 @@ public class Method implements HaveRange {
 
     }
 
+    public List<MethodCall> getAppels() 
+    {
+    	return this.listAppels;
+    }
+    
+    public void addAppelMethode(MethodCall _o) 
+    {
+        this.listAppels.add(_o);
+    }
 }

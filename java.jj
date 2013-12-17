@@ -175,6 +175,9 @@ public class JavaParser
 				int nbrAttributsPrive     = 0;
 				int nbrAttributsProtected = 0;
 				
+				// pour le numero 4
+				HashMap<String, Integer> classAssociationCount = new HashMap<String, Integer>();
+				
 				DescriptionClass c = (DescriptionClass)classesIterator.next();
 				System.out.println(" +" + c.get_Name() + "\n");	
 	
@@ -246,20 +249,28 @@ public class JavaParser
 		   		while(methodIterator.hasNext()){
 					
 		   			Method m = (Method)methodIterator.next();
-		   								
-					/*System.out.println("   Sa portee: " + m.range.toString() +"\n");	
-			
-	
-					//Affiche les simple stats
-					System.out.println("       Nombre d'attribut(s): " + m.attributelist.size());
-					
-					System.out.println("       Liste d'attributs :");
-					ListIterator y = m.attributelist.listIterator();
-					while(y.hasNext())
-						System.out.println("          " +((Attribute)y.next()).toString());
-					System.out.println("");
-					*/
+
+                    for (int i = 0; i < m.listAppels.size(); i++) {
+                        String t = m.listAppels.get(i).getObject();
+                        if (!classAssociationCount.containsKey(t)) {
+                                classAssociationCount.put(t, 1);
+                        }
+                        else {
+                        	int v = classAssociationCount.get(t);
+                        	v++;
+                        	classAssociationCount.put(t, v);
+                        }
+                    }
+		   			
 				}
+		   		
+		   		// affichage des resultats du #4
+		   		for(java.util.Map.Entry<String, Integer> entry : classAssociationCount.entrySet()) {
+                    String key = entry.getKey();
+                    int value = entry.getValue();
+
+                    System.out.println("Class " + key + " a " + value + " associations");
+                }
 		   		
 			}
 		}
@@ -1190,31 +1201,29 @@ void CastExpression() :
 }
 
 void PrimaryExpression() :
-{}
 {
-	PrimaryPrefix() ( LOOKAHEAD(2) PrimarySuffix() )*
-}
-/*
- * String Type() :
-{
-  String strReturn = "";
+  MethodCall mc;
+  String strValeur = "";
+  String strTemp = "";
 }
 {
-  ( strReturn = PrimitiveType() | strReturn = Name() ) ( "[" {strReturn += "[";}  "]" {strReturn += "]";} )*
-  {return strReturn;}
+  strValeur = PrimaryPrefix() ( LOOKAHEAD(2) strTemp = PrimarySuffix() { strValeur += strTemp; } )*
+  {
+    mc = new MethodCall(strValeur);
+    if (mc.getSize() > 1)
+    {
+            this.om.addToTopObject(mc);
+            this.om.pop();        
+           }
+  }
 }
- */
-void PrimaryPrefix() :
+
+String PrimaryPrefix() :
 {
-	String str = "";
-	Method m = new Method();
-	
-	if (om.peek() instanceof Method) {
-		m = (Method)om.peek();
-	}
+        String strReturn = "";
 }
 {
-  Literal()
+  (Literal()
 |
   "this"
 |
@@ -1227,21 +1236,21 @@ void PrimaryPrefix() :
   LOOKAHEAD( ResultType() "." "class" )
   ResultType() "." "class"
 |
-  str = Name()
+  strReturn = Name())
   {
-	  m.set_body(str);
-	  om.addToTopObject(m);
-	  om.pop();
+    return strReturn;
   }
 }
 
 /* Add "." "super" to be compatible with Java 1.2, 
  * Modified by Marco Savard
  */ 
-void PrimarySuffix() :
-{}
+String PrimarySuffix() :
 {
-  LOOKAHEAD(2)
+  Token token = null;
+}
+{
+  (LOOKAHEAD(2)
   "." "this"
 |
   LOOKAHEAD(2)
@@ -1252,9 +1261,15 @@ void PrimarySuffix() :
 |
   "[" Expression() "]"
 |
-  "." <IDENTIFIER>
+  "." token = <IDENTIFIER>
 |
   Arguments()
+  {
+    return "()";
+  })
+  {
+    return token == null ? "" : "." + token.toString();
+  }
 }
 
 void Literal() :
